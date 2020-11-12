@@ -57,13 +57,16 @@ public:
    void setDrmListModel(QAbstractItemModel * p_model);
    DrmListModel *drmListModel();
    QItemSelectionModel * drmListSelectionModel();
+   QMenu* songContextMenu;
 
 signals:
    void sigCurrentTabChanged(int index);
    void sigCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
    void sigOpenDrm(const QString& name, const QString &filePath);
+   void sigShowSearchSongDialog();
 
 public slots:
+   void slotSongSearch();
    void slotCleanChanged(bool clean);
    void slotCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
    void slotOnCurrentTabChanged(int index);

@@ -34,7 +34,7 @@
 #include "../model/tree/project/beatsprojectmodel.h"
 #include "drmmaker/UI_Elements/Labels/ClickableLabel.h"
 #include "../model/tree/abstracttreeitem.h"
-#include "../mainwindow.h" 
+#include "../mainwindow.h"
 #include "../model/filegraph/song.h"  // to get MAX_BPM
 #include "../workspace/settings.h"
 
@@ -157,6 +157,12 @@ void ProjectExplorerPanel::createLayout()
    mp_beatsTreeView->setDragEnabled(true);
    mp_beatsTreeView->setAcceptDrops(true);
    p_tabWidget->addTab(mp_beatsTreeView, tr("Songs"));
+
+   songContextMenu = new QMenu(mp_beatsTreeView);
+   mp_beatsTreeView->setContextMenuPolicy(Qt::ActionsContextMenu);
+   QAction * songSearchAction = new QAction(tr("Search Song"),songContextMenu);
+   mp_beatsTreeView->addAction(songSearchAction);
+   connect(songSearchAction, SIGNAL(triggered()), this, SLOT(slotSongSearch()));
    connect(mp_beatsTreeView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotOnDoubleClick(QModelIndex)));
 
    mp_drmListView = new QListView();
@@ -187,7 +193,10 @@ bool ProjectExplorerPanel::doesUserConsentToImportDrumset()
 }
 
 
-
+void ProjectExplorerPanel::slotSongSearch()
+{
+    emit sigShowSearchSongDialog();
+}
 
 // Required to apply stylesheet
 void ProjectExplorerPanel::paintEvent(QPaintEvent *)

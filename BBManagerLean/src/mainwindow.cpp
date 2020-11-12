@@ -32,6 +32,7 @@
 #include "dialogs/aboutdialog.h"
 #include "dialogs/optionsdialog.h"
 #include "dialogs/supportdialog.h"
+#include "dialogs/searchsongdialog.h"
 #include "drmmaker/DrumsetPanel.h"
 #include "mainwindow.h"
 #include "model/beatsmodelfiles.h"
@@ -107,7 +108,7 @@ void MainWindow::initUI()
     if(Settings::getWindowMaximized()) {
         showMaximized();
     }
-
+    mp_SearchSongDialog = new SearchSongDialog(this);
 }
 
 void MainWindow::initWorkspace()
@@ -198,6 +199,7 @@ void MainWindow::createBeatsModels(const QString &projectFilePath, bool create)
 
    mp_PlaybackPanel->setModel(mp_beatsModel);
 
+   connect(mp_ProjectExplorerPanel, SIGNAL(sigShowSearchSongDialog()), this, SLOT(slotShowSearchSongDialog()));
    connect(mp_BeatsPanel->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(slotOnBeatsCurrentOrSelChanged()));
    connect(mp_BeatsPanel->selectionModel(), SIGNAL(currentChanged(const QModelIndex&,const QModelIndex&)), mp_beatsModel, SLOT(selectionChanged(const QModelIndex&,const QModelIndex&)));
    connect(mp_beatsModel, SIGNAL(changeSelection(const QModelIndex&)), mp_BeatsPanel, SLOT(changeSelection(const QModelIndex&)));
@@ -350,6 +352,10 @@ void MainWindow::createActions()
     mp_delete = this->buildAction(tr("Delete Song"), tr("Delete selected song file or directory"), tr("Delete selected song file or directory"));
     mp_delete->setShortcuts(sc);
     connect(mp_delete, SIGNAL(triggered()), this, SLOT(slotDelete()));
+
+    mp_ShowSongSearchDialog = this->buildAction(tr("&Search Song"), tr("Show Search Song Dialog"), tr("Show Search Song Dialog"), QKeySequence(Qt::ControlModifier | Qt::Key_F));
+    connect(mp_ShowSongSearchDialog, SIGNAL(triggered()), this, SLOT(slotShowSearchSongDialog()));
+    connect(this, SIGNAL(sigShowSearchSongDialog()), this, SLOT(slotShowSearchSongDialog()));
 
     mp_prev = this->buildAction(tr("Go To Previous"),tr("Go To Previous"), tr("Select Previous"), QKeySequence(Qt::Key_Up));
     connect(mp_prev, SIGNAL(triggered()), this, SLOT(slotPrev()));
@@ -562,6 +568,7 @@ void MainWindow::createMenus()
     mp_edit->addAction(mp_Paste);
 
     mp_songsMenu = menuBar()->addMenu(tr("&Songs"));
+    mp_songsMenu->addAction(mp_ShowSongSearchDialog);
     mp_songsMenu->addAction(mp_newSong);
     mp_songsMenu->addAction(mp_newFolder);
     mp_songsMenu->addAction(mp_delete);
@@ -2709,6 +2716,12 @@ void MainWindow::slotChangeWorkspaceLocation()
                                 .arg(mp_toolsMenu->title().replace("&", ""))
                                 .arg(mp_ChangeWorkspaceLocation->text().replace("&", "")));
     }
+}
+
+void MainWindow::slotShowSearchSongDialog()
+{
+    qDebug() << "Trying to search a song...";
+    mp_SearchSongDialog->exec();
 }
 
 
