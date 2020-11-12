@@ -108,7 +108,7 @@ void MainWindow::initUI()
     if(Settings::getWindowMaximized()) {
         showMaximized();
     }
-    mp_SearchSongDialog = new SearchSongDialog(this);
+    mp_SearchSongDialog = new SearchSongDialog (this, mp_ProjectExplorerPanel->beatsSelectionModel());
 }
 
 void MainWindow::initWorkspace()
@@ -1380,6 +1380,9 @@ void MainWindow::slotTempoChangedBySong(int bpm)
 }
 
 MainWindow::~MainWindow(){
+   if(mp_beatsModel){
+      delete mp_beatsModel;
+   }
    if(mp_beatsModel){
       delete mp_beatsModel;
    }
