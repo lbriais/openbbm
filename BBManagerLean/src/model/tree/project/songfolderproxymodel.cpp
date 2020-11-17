@@ -21,7 +21,7 @@
 #include <QDataStream>
 
 SongFolderProxyModel::SongFolderProxyModel(QObject *parent) :
-   QIdentityProxyModel(parent)
+   QSortFilterProxyModel(parent)
 {
    m_virtualRoot = QModelIndex();
    m_maxDepth    = 0;
@@ -36,14 +36,14 @@ int SongFolderProxyModel::columnCount(const QModelIndex & /*parent*/) const
 bool SongFolderProxyModel::hasChildren(const QModelIndex & parent) const
 {
    if(m_maxDepth <= 0){
-      return QIdentityProxyModel::hasChildren(parent);
+      return QSortFilterProxyModel::hasChildren(parent);
    }
 
    // try to find root in parent withing m_maxDepth
    QModelIndex tempParent = parent;
    for(int i = 0; i < m_maxDepth; i++){
       if(!tempParent.isValid()){
-         return QIdentityProxyModel::hasChildren(parent);
+         return QSortFilterProxyModel::hasChildren(parent);
       }
       tempParent = tempParent.parent();
    }
@@ -60,13 +60,13 @@ QModelIndex	SongFolderProxyModel::index(int row, int column, const QModelIndex &
    if(!hasChildren(parent)){
       return QModelIndex();
    }
-   return QIdentityProxyModel::index(row, column, parent);
+   return QSortFilterProxyModel::index(row, column, parent);
 }
 
 Qt::ItemFlags SongFolderProxyModel::flags(const QModelIndex & index) const
 {
 
-   Qt::ItemFlags ret = QIdentityProxyModel::flags(index);
+   Qt::ItemFlags ret = QSortFilterProxyModel::flags(index);
 
     if (index.parent().parent() != QModelIndex())
         ret &= ~Qt::ItemIsDropEnabled;
@@ -80,26 +80,26 @@ QVariant SongFolderProxyModel::data(const QModelIndex & index, int role) const
    }
 
    QVariant out;
-   out = QIdentityProxyModel::data(index, role);
+   out = QSortFilterProxyModel::data(index, role);
 
    return out;
 }
 
 bool SongFolderProxyModel::setData(const QModelIndex & index, const QVariant & value, int role)
 {
-   bool ret = QIdentityProxyModel::setData(index, value, role);
+   bool ret = QSortFilterProxyModel::setData(index, value, role);
    return ret;
 }
 
 Qt::DropActions SongFolderProxyModel::supportedDragActions() const
 {
-    Qt::DropActions ret = QIdentityProxyModel::supportedDragActions();
+    Qt::DropActions ret = QSortFilterProxyModel::supportedDragActions();
     return Qt::TargetMoveAction | Qt::CopyAction;
 }
 
 Qt::DropActions SongFolderProxyModel::supportedDropActions() const
 {
-    Qt::DropActions ret = QIdentityProxyModel::supportedDropActions();
+    Qt::DropActions ret = QSortFilterProxyModel::supportedDropActions();
     return Qt::TargetMoveAction | Qt::CopyAction;
 }
 
@@ -107,7 +107,7 @@ QMimeData* SongFolderProxyModel::mimeData(const QModelIndexList &indexes) const
 {
     if (indexes.size() != 1)
         return nullptr;
-    QMimeData* ret = QIdentityProxyModel::mimeData(indexes);
+    QMimeData* ret = QSortFilterProxyModel::mimeData(indexes);
     ret->setProperty("index", indexes[0]);
     return ret;
 }

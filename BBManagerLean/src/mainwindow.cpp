@@ -108,7 +108,7 @@ void MainWindow::initUI()
     if(Settings::getWindowMaximized()) {
         showMaximized();
     }
-    mp_SearchSongDialog = new SearchSongDialog (this, mp_ProjectExplorerPanel->beatsSelectionModel());
+    mp_SearchSongDialog = new SearchSongDialog (this);
 }
 
 void MainWindow::initWorkspace()

@@ -1,9 +1,10 @@
 #ifndef SONGFOLDERPROXYMODEL_H
 #define SONGFOLDERPROXYMODEL_H
 
-#include <QIdentityProxyModel>
+// #include <QIdentityProxyModel>
+#include <QSortFilterProxyModel>
 
-class SongFolderProxyModel : public QIdentityProxyModel
+class SongFolderProxyModel : public QSortFilterProxyModel
 {
    Q_OBJECT
 public:
