@@ -79,7 +79,7 @@ private slots:
     void slotShowOptionsDialog();
     void slotChangeWorkspaceLocation();
     void slotShowAboutDialog();
-    void slotShowSearchSongDialog();
+    void slotShowFilterSongsDialog();
     void slotOpenUrlManual();
     void slotOpenUrlForum();
     void slotShowSupportDialog();
@@ -150,7 +150,7 @@ public:
     QAction* mp_exit;
 
     QMenu* mp_songsMenu;
-    QAction* mp_ShowSongSearchDialog;
+    QAction* mp_ShowFilterSongsDialog;
     QAction* mp_newSong;
     QAction* mp_delete;
     QAction* mp_moveUp;
@@ -236,7 +236,7 @@ public:
     Workspace* mp_MasterWorkspace;
 
     QDialog* mp_CheatShitDialog;
-    QDialog* mp_SearchSongDialog;
+    QDialog* mp_FilterSongsDialog;
     bool m_done;
 
 private:

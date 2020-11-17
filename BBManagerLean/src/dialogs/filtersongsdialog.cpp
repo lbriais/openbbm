@@ -1,29 +1,29 @@
 #include <QDebug>
 #include <QSortFilterProxyModel>
 
-#include "searchsongdialog.h"
-#include "ui_searchsongdialog.h"
+#include "filtersongsdialog.h"
+#include "ui_filtersongsdialog.h"
 #include "mainwindow.h"
 
-SearchSongDialog::SearchSongDialog(QWidget *parent) :
+FilterSongsDialog::FilterSongsDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::SearchSongDialog)
+    ui(new Ui::FilterSongsDialog)
 {
     ui->setupUi(this);
-    this->setWindowTitle(tr("Search song..."));
+    this->setWindowTitle(tr("Filter songs..."));
     ui->caseSensitiveCB->setText(tr("Case sensitive"));
 }
 
 
-SearchSongDialog::~SearchSongDialog()
+FilterSongsDialog::~FilterSongsDialog()
 {
     delete ui;
 }
 
-void SearchSongDialog::on_songSearchEdit_textChanged(const QString &arg1)
+void FilterSongsDialog::on_filterSongsEdit_textChanged(const QString &arg1)
 {
-    qDebug() << "Searching for song matching: " << arg1;
-    QItemSelectionModel * selectionmodel = getSearchSelectionModel();
+    qDebug() << "Filtering songs using: " << arg1;
+    QItemSelectionModel * selectionmodel = getSongsSelectionModel();
     debugModel(selectionmodel);
     SongFolderProxyModel* model = qobject_cast<SongFolderProxyModel *>(selectionmodel->model());
     model->setRecursiveFilteringEnabled(true);
@@ -35,28 +35,28 @@ void SearchSongDialog::on_songSearchEdit_textChanged(const QString &arg1)
     model->setFilterFixedString(arg1);
 }
 
-void SearchSongDialog::updateUI(const QString &arg1)
+void FilterSongsDialog::updateUI(const QString &arg1)
 {
     if (arg1.isEmpty()) {
 
     }
 }
 
-void SearchSongDialog::debugModel (QItemSelectionModel * selectionmodel)
+void FilterSongsDialog::debugModel (QItemSelectionModel * selectionmodel)
 {
     qDebug() << "hasSelection: " << selectionmodel->hasSelection();
     qDebug() << "model: " << selectionmodel->model();
 }
 
 
-QItemSelectionModel * SearchSongDialog::getSearchSelectionModel()
+QItemSelectionModel * FilterSongsDialog::getSongsSelectionModel()
 {
     return qobject_cast<MainWindow *>(parent())->mp_ProjectExplorerPanel->beatsSelectionModel();
 }
 
 
-void SearchSongDialog::on_caseSensitiveCB_stateChanged(int arg1)
+void FilterSongsDialog::on_caseSensitiveCB_stateChanged(int arg1)
 {
     qDebug() << "Case sensitivity CB status: " << arg1;
-    emit on_songSearchEdit_textChanged(ui->songSearchEdit->text());
+    emit on_filterSongsEdit_textChanged(ui->filterSongsEdit->text());
 }

@@ -163,7 +163,7 @@ SOURCES +=./src/main.cpp\
     src/midi_editor/editorcelldelegate.cpp \
     src/midi_editor/editorverticalheader.cpp \
     src/midi_editor/editorhorizontalheader.cpp \
-    ./src/dialogs/searchsongdialog.cpp
+    ./src/dialogs/filtersongsdialog.cpp
 
 HEADERS  += \
     ./src/treeitem.h \
@@ -300,7 +300,7 @@ HEADERS  += \
     src/midi_editor/editorcelldelegate.h \
     src/midi_editor/editordialog.h \
     src/midi_editor/undoable_commands.h \
-    ./src/dialogs/searchsongdialog.h
+    ./src/dialogs/filtersongsdialog.h
 
 FORMS += \
     ./src/newprojectdialog.ui \
@@ -310,7 +310,7 @@ FORMS += \
     ./src/dialogs/supportdialog.ui \
     ./src/dialogs/updatebbmdialog.ui \
     src/update/updatedialog.ui \
-    ./src/dialogs/searchsongdialog.ui
+    ./src/dialogs/filtersongsdialog.ui
 
 RESOURCES += \
     ./res/resources.qrc

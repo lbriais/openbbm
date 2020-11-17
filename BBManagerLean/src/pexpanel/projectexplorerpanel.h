@@ -63,10 +63,10 @@ signals:
    void sigCurrentTabChanged(int index);
    void sigCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
    void sigOpenDrm(const QString& name, const QString &filePath);
-   void sigShowSearchSongDialog();
+   void sigShowFilterSongsDialog();
 
 public slots:
-   void slotSongSearch();
+   void slotFilterSongs();
    void slotCleanChanged(bool clean);
    void slotCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
    void slotOnCurrentTabChanged(int index);

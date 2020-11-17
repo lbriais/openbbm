@@ -160,9 +160,9 @@ void ProjectExplorerPanel::createLayout()
 
    songContextMenu = new QMenu(mp_beatsTreeView);
    mp_beatsTreeView->setContextMenuPolicy(Qt::ActionsContextMenu);
-   QAction * songSearchAction = new QAction(tr("Search Song"),songContextMenu);
-   mp_beatsTreeView->addAction(songSearchAction);
-   connect(songSearchAction, SIGNAL(triggered()), this, SLOT(slotSongSearch()));
+   QAction * filterSongsAction = new QAction(tr("Filter Songs"),songContextMenu);
+   mp_beatsTreeView->addAction(filterSongsAction);
+   connect(filterSongsAction, SIGNAL(triggered()), this, SLOT(slotFilterSongs()));
    connect(mp_beatsTreeView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotOnDoubleClick(QModelIndex)));
 
    mp_drmListView = new QListView();
@@ -193,9 +193,9 @@ bool ProjectExplorerPanel::doesUserConsentToImportDrumset()
 }
 
 
-void ProjectExplorerPanel::slotSongSearch()
+void ProjectExplorerPanel::slotFilterSongs()
 {
-    emit sigShowSearchSongDialog();
+    emit sigShowFilterSongsDialog();
 }
 
 // Required to apply stylesheet
