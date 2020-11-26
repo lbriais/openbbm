@@ -22,7 +22,7 @@ FilterSongsDialog::~FilterSongsDialog()
 
 void FilterSongsDialog::on_filterSongsEdit_textChanged(const QString &arg1)
 {
-    qDebug() << "Filtering songs using: " << arg1;
+    qDebug() << "Filtering songs using: '" << arg1 << "'";
     QItemSelectionModel * selectionmodel = getSongsSelectionModel();
     debugModel(selectionmodel);
     SongFolderProxyModel* model = qobject_cast<SongFolderProxyModel *>(selectionmodel->model());

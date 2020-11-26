@@ -2723,7 +2723,6 @@ void MainWindow::slotChangeWorkspaceLocation()
 
 void MainWindow::slotShowFilterSongsDialog()
 {
-    qDebug() << "Trying to search a song...";
     mp_FilterSongsDialog->exec();
 }
 
